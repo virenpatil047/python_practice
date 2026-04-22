@@ -41,7 +41,7 @@ ____/______/______/______/__"=._o--._   ;o|o;     _._;o;____/______/______/____
 ____/______/______/______/______/_____"=.o|o_.--""___/______/______/______/____
 /______/______/______/______/______/______/______/______/______/______/[TomekK]
 *******************************************************************************''')
-print("Welcome to treasure island.\n
+print("Welcome to treasure island.\n"
         "Your mission is to find the treasure.")
 choice = input(("Will you go left or right ? "))
 if(choice.casefold() == "Right".casefold()):
