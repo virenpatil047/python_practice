@@ -8,9 +8,9 @@ DOWN = 270
 class Snake:
     
     def __init__(self):
-        self.snake = []
+        self.segments = []
         self.create_snake()
-        self.head = self.snake[0]
+        self.head = self.segments[0]
         
     def create_snake(self):
         x_index = 0
@@ -20,12 +20,21 @@ class Snake:
             segment.shape("square")
             segment.color("white")
             segment.goto(x_index, 0)
-            self.snake.append(segment)
+            self.segments.append(segment)
             x_index -= 20
+    
+    def extend(self):
+        segment = Turtle()
+        segment.penup()
+        segment.shape("square")
+        segment.color("white")
+        segment.goto(self.segments[-1].position())
+        self.segments.append(segment)
+        
             
     def move(self):
-        for i in range(len(self.snake)-1, 0, -1):
-            self.snake[i].goto(self.snake[i-1].xcor(), self.snake[i-1].ycor())
+        for i in range(len(self.segments)-1, 0, -1):
+            self.segments[i].goto(self.segments[i-1].xcor(), self.segments[i-1].ycor())
         self.head.forward(20)
         
     def up(self):
