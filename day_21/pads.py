@@ -22,12 +22,25 @@ class Pads(Turtle):
         turtle.goto(side, 0)
         self.pads.append(turtle)
     
-    def up(self):
+    def r_up(self):
         x_cor, y_cor = self.right_pad.xcor(), self.right_pad.ycor()
         if y_cor + MOVE < MAX_Y_COR:
             self.right_pad.goto(x_cor, y_cor + MOVE)
 
-    def down(self):
+    def r_down(self):
         x_cor, y_cor = self.right_pad.xcor(), self.right_pad.ycor()
         if abs(y_cor - MOVE) < MAX_Y_COR:
             self.right_pad.goto(x_cor, y_cor - MOVE)
+
+    def l_up(self):
+        x_cor, y_cor = self.left_pad.xcor(), self.left_pad.ycor()
+        if y_cor + MOVE < MAX_Y_COR:
+            self.left_pad.goto(x_cor, y_cor + MOVE)
+
+    def l_down(self):
+        x_cor, y_cor = self.left_pad.xcor(), self.left_pad.ycor()
+        if abs(y_cor - MOVE) < MAX_Y_COR:
+            self.left_pad.goto(x_cor, y_cor - MOVE)
+            
+    def get_pads(self):
+        return self.pads
