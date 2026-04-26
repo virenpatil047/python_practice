@@ -35,6 +35,7 @@ while game_is_on:
     car_manager.move_cars()
     
     if car_manager.check_collison(player):
+        scoreboard.game_over()
         game_is_on = False
     
     if player.cross_finish_line():
