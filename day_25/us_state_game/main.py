@@ -12,16 +12,17 @@ screen.addshape(image)
 turtle.shape(image)
 
 df = pd.read_csv(BASE_PATH / "50_states.csv")
-state_map = {}
 # states = df["state"].tolist()
 # print(tuple(df.loc[df["state"] == "Arizona", ["x", "y"]].iloc[0]))
 # print(df.loc[df["state"] == "Arizona", ["x", "y"]].values[0].tolist())
 
-for state in df["state"]:
-    state_map[state.lower()] = tuple(df.loc[df["state"] == state, ["x", "y"]].iloc[0])
+# for state in df["state"]:
+#     state_map[state.lower()] = tuple(df.loc[df["state"] == state, ["x", "y"]].iloc[0])
+
+state_map = {state.lower():tuple(df.loc[df["state"] == state, ["x", "y"]].iloc[0]) for state in df["state"]}
 
 while len(state_map) > 0:
-    ans_state = screen.textinput(title=f"{50 - len(state_map)}/50 States Correct", prompt="What's another state's name ?")
+    ans_state = screen.textinput(title=f"{50 - len(state_map)}/50 States Correct", prompt="What's another state's name ?").lower()
     
     if ans_state is None or ans_state == "":
         break
