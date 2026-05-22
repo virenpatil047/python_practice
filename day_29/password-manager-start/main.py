@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import pyperclip
 import random
+import json
 from pathlib import Path
 
 BASE = Path(__file__).parent
@@ -39,6 +40,12 @@ def add_to_file():
     web = entry[0].get()
     u_id = entry[1].get()
     pwd = entry[2].get()
+    new_data = {
+        web : {
+            "username": u_id,
+            "password" : pwd
+        }
+    }
     
     if not all([web, u_id, pwd]):
         messagebox.showinfo(title="Oops", message="Please don't leave any fields empty !")
@@ -47,14 +54,45 @@ def add_to_file():
     is_ok = messagebox.askokcancel(title=web, message=f"These are the details entered : \nEmail : {u_id}"
                                                         f"\nPassword : {pwd} \nIs it ok to save ?")
     
-    
     if not is_ok:
         return
     
-    with open(BASE / "data.txt", 'a') as f:
-        f.write(f"{web} | {u_id} | {pwd}\n")
-    entry[0].delete(0, END)
-    entry[2].delete(0, END)
+    try:
+        with open(BASE / "data.json", 'r') as f:
+            data = json.load(f)
+            data.update(new_data)
+    except FileNotFoundError:
+        with open(BASE / "data.json", 'w') as f:
+            json.dump(new_data, f, indent=4)
+    else:    
+        with open(BASE / "data.json", 'w') as f:
+            json.dump(data, f, indent=4)
+    finally:
+        with open(BASE / "data.txt", 'a') as f:
+            f.write(f"{web} | {u_id} | {pwd}\n")
+        entry[0].delete(0, END)
+        entry[2].delete(0, END)
+
+
+# ---------------------------- SEARCH ------------------------------- #
+def find_password():
+    srch.config(bg="lightblue")
+    web = entry[0].get()
+    try:
+        with open(BASE / "data.json", "r") as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        messagebox.showinfo(title=web, message="No data file found !")
+    else:
+        if web not in data:
+            messagebox.showinfo(title=web, message="No details for the website exists !")
+        else:
+            u_id = data[web]["username"]
+            pwd = data[web]["password"]
+            messagebox.showinfo(title=web, message=f"Email : {u_id}"
+                                                f"\nPassword : {pwd}")
+    finally:
+        srch.config(bg="white")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -80,7 +118,7 @@ for (label_text, pos) in label_info.items():
     label.append(create_label)
 
 entry_info = {
-    (1,1) : 52,
+    (1,1) : 34,
     (2,1) : 52,
     (3,1) : 34
 }
@@ -96,6 +134,9 @@ entry[1].insert(0, "virenpatil047@gmail.com")
 
 gen_pwd = Button(text="Generate Password", command=generate_pwd)
 gen_pwd.grid(row=3, column=2)
+
+srch = Button(text="Search", width=14, command=find_password)
+srch.grid(row=1, column=2)
 
 add = Button(text="Add", width=44, command=add_to_file)
 add.grid(row=4, column=1, columnspan=2)
