@@ -38,7 +38,7 @@ if any(id < 700 for id in weather_ids):
     message = client.messages.create(
         body="It's going to rain today, don't forget to bring an umbrella ☂️.",
         from_="+13613044933",
-        to="+918088343188",
+        to="+91XXXXXXXXXX",
     )
     
     print(message.status)
