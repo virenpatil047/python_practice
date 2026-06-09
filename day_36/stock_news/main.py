@@ -19,7 +19,7 @@ def send_sms(percentage, title, desc):
     message = client.messages.create(
         body=msg,
         from_="+13613044933",
-        to="+918088343188",
+        to="+91XXXXXXXXXX",
     )
     
     print(message.status)
