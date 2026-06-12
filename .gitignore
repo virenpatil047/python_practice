@@ -2,3 +2,4 @@
 __pycache__/
 *.pyc
 **sqllite
+day_39/data_manager_cache.sqlite
